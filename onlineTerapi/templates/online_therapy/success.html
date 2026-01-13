@@ -1,0 +1,265 @@
+{% extends "Base.html" %}
+{% block content %}
+<style>
+  :root {
+    --primary: #7c3aed;
+    --success: #10b981;
+  }
+
+  body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+  }
+
+  .success-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+
+  .success-card {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 25px 50px -12px rgba(124, 58, 237, 0.3);
+    text-align: center;
+    padding: 60px 40px;
+    max-width: 600px;
+    animation: slideUp 0.6s ease-out;
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .success-icon {
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 30px;
+    font-size: 50px;
+    animation: scaleIn 0.6s ease-out 0.3s both;
+  }
+
+  @keyframes scaleIn {
+    from {
+      transform: scale(0);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+
+  .success-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--success);
+    margin-bottom: 15px;
+    animation: fadeInDown 0.6s ease-out 0.4s both;
+  }
+
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .success-message {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 15px;
+    line-height: 1.8;
+    animation: fadeInUp 0.6s ease-out 0.5s both;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .success-details {
+    background: #f0fdf4;
+    border-left: 4px solid var(--success);
+    padding: 20px;
+    border-radius: 8px;
+    margin: 30px 0;
+    text-align: left;
+    animation: fadeInUp 0.6s ease-out 0.6s both;
+  }
+
+  .success-details h5 {
+    color: var(--success);
+    font-weight: 700;
+    margin-bottom: 15px;
+  }
+
+  .success-details ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .success-details li {
+    color: #555;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(16, 185, 129, 0.2);
+  }
+
+  .success-details li:last-child {
+    border-bottom: none;
+  }
+
+  .success-details li:before {
+    content: '✓ ';
+    color: var(--success);
+    font-weight: bold;
+    margin-right: 8px;
+  }
+
+  .button-group {
+    display: flex;
+    gap: 15px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+    justify-content: center;
+    animation: fadeInUp 0.6s ease-out 0.7s both;
+  }
+
+  .btn {
+    padding: 14px 30px;
+    font-weight: 600;
+    border-radius: 10px;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+    font-size: 1rem;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--primary) 0%, #6d28d9 100%);
+    color: white;
+    box-shadow: 0 8px 20px rgba(124, 58, 237, 0.3);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(124, 58, 237, 0.4);
+  }
+
+  .btn-secondary {
+    background: #e5e7eb;
+    color: #374151;
+    border: 2px solid #d1d5db;
+  }
+
+  .btn-secondary:hover {
+    background: #d1d5db;
+    transform: translateY(-2px);
+  }
+
+  .success-footer {
+    margin-top: 30px;
+    padding-top: 30px;
+    border-top: 2px solid #e5e7eb;
+    color: #888;
+    font-size: 0.95rem;
+    animation: fadeInUp 0.6s ease-out 0.8s both;
+  }
+
+  .checkmark {
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #10b981;
+    position: relative;
+  }
+
+  .checkmark::after {
+    content: '';
+    position: absolute;
+    width: 15px;
+    height: 25px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+    left: 20px;
+    top: 12px;
+    animation: checkmark-animation 0.8s ease 0.3s forwards;
+  }
+
+  @keyframes checkmark-animation {
+    0% {
+      opacity: 0;
+      transform: rotate(45deg) scale(0.5);
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 1;
+      transform: rotate(45deg) scale(1);
+    }
+  }
+</style>
+
+<div class="success-container">
+  <div class="success-card">
+    <div class="success-icon">✓</div>
+    
+    <h2 class="success-title">Başarıyla Gönderildi!</h2>
+    
+    <p class="success-message">
+      Formunuz başarıyla kaydedilmiştir. Teşekkür ederiz!
+    </p>
+
+    <div class="success-details">
+      <h5>Sonraki Adımlar</h5>
+      <ul>
+        <li>Formunuz incelenmek üzere alınmıştır</li>
+        <li>Psikologlarımız en kısa sürede sizinle iletişime geçecek</li>
+        <li>Kayıtlı e-mail adresinize özet bilgi gönderilecektir</li>
+        <li>Gizliliğiniz ve güvenliğiniz bizim önceliğimizdir</li>
+      </ul>
+    </div>
+
+    <p class="success-message" style="font-size: 0.95rem; color: #999; margin: 20px 0 0 0;">
+      💜 <strong>e-rehber ailesi</strong> olarak sizi beklemekteyiz
+    </p>
+
+    <div class="button-group">
+      <a href="{% url 'online_therapy:form' %}" class="btn btn-primary">← Yeni Form Gönder</a>
+      <a href="{% url 'online_therapy:home' %}" class="btn btn-secondary">Ana Sayfa</a>
+    </div>
+
+    <div class="success-footer">
+      Sorularınız için bize <strong>iletişim@erehber.com</strong> adresinden yazabilirsiniz
+    </div>
+  </div>
+</div>
+{% endblock %}

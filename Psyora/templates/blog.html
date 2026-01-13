@@ -1,0 +1,56 @@
+{% extends "Base.html" %}
+{% load static %}
+
+{% block extra_head %}
+<link href="{% static 'css/Home.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block body_class %}page-bg{% endblock %}
+
+{% block title %}Blog - E-Rehber{% endblock %}
+
+{% block content %}
+<div class="p-4 bg-white rounded shadow-sm">
+	<h1 class="mb-4">Blog</h1>
+	<p class="lead text-muted">Psikoloji ve mental sağlık üzerine yazılar</p>
+	
+	<div class="row">
+		<div class="col-md-12 mb-4">
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title">Mental Sağlığınızı Korumak İçin 5 İpucu</h5>
+					<p class="text-muted small">15 Ocak 2026</p>
+					<p class="card-text">Mental sağlık, fiziksel sağlık kadar önemlidir. Günlük hayatta mental sağlığınızı korumak için uygulayabileceğiniz basit ama etkili yöntemler...</p>
+					<a href="#" class="btn btn-sm btn-outline-primary">Devamını Oku</a>
+				</div>
+			</div>
+		</div>
+		
+		<div class="col-md-12 mb-4">
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title">Stresle Başa Çıkma Yöntemleri</h5>
+					<p class="text-muted small">10 Ocak 2026</p>
+					<p class="card-text">Modern yaşamın getirdiği stresle başa çıkmak için kullanabileceğiniz kanıtlanmış yöntemler ve teknikler...</p>
+					<a href="#" class="btn btn-sm btn-outline-primary">Devamını Oku</a>
+				</div>
+			</div>
+		</div>
+		
+		<div class="col-md-12 mb-4">
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title">Çocuklarda Kaygı Bozukluğu: Ebeveynler Ne Yapmalı?</h5>
+					<p class="text-muted small">5 Ocak 2026</p>
+					<p class="card-text">Çocuklarda kaygı belirtilerini fark etmek ve doğru yaklaşımlarla desteklemek için ebeveyn rehberi...</p>
+					<a href="#" class="btn btn-sm btn-outline-primary">Devamını Oku</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="mt-3 text-center">
+		<p class="text-muted">Yakında daha fazla içerik...</p>
+	</div>
+</div>
+{% endblock %}

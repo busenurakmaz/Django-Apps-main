@@ -1,0 +1,392 @@
+{% extends "Base.html" %}
+
+{% block content %}
+<style>
+    .detail-container {
+        background: linear-gradient(135deg, #f5f3ff 0%, #fff5f7 100%);
+        min-height: 100vh;
+        padding: 40px 20px;
+    }
+
+    .detail-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%);
+        background-size: 400% 400%;
+        animation: gradientShift 15s ease infinite;
+        color: white;
+        padding: 40px;
+        border-radius: 25px;
+        margin-bottom: 40px;
+        box-shadow: 0 20px 60px rgba(124, 58, 237, 0.3);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    .detail-header h1 {
+        margin: 0;
+        font-weight: 900;
+        font-size: 2rem;
+    }
+
+    .back-button {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        padding: 12px 25px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 700;
+        transition: all 0.3s ease;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .back-button:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: translateY(-2px);
+    }
+
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 40px;
+    }
+
+    .info-card {
+        background: white;
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(124, 58, 237, 0.1);
+    }
+
+    .info-label {
+        color: #6b7280;
+        font-weight: 600;
+        font-size: 0.9rem;
+        margin-bottom: 8px;
+        letter-spacing: 0.5px;
+    }
+
+    .info-value {
+        color: #1f2937;
+        font-weight: 700;
+        font-size: 1.1rem;
+    }
+
+    .status-section {
+        background: white;
+        padding: 30px;
+        border-radius: 20px;
+        margin-bottom: 30px;
+        box-shadow: 0 5px 15px rgba(124, 58, 237, 0.1);
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+        font-weight: 900;
+        color: #1f2937;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .status-form {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 15px;
+        align-items: end;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-group label {
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: #4b5563;
+    }
+
+    .form-group select {
+        padding: 12px 15px;
+        border: 2px solid #e5e7eb;
+        border-radius: 10px;
+        font-size: 1rem;
+        font-family: inherit;
+    }
+
+    .form-group select:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .btn-update {
+        background: linear-gradient(135deg, #667eea, #f093fb);
+        color: white;
+        padding: 12px 30px;
+        border: none;
+        border-radius: 10px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+    }
+
+    .btn-update:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    }
+
+    .answers-section {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(124, 58, 237, 0.1);
+        margin-bottom: 30px;
+    }
+
+    .answers-header {
+        background: linear-gradient(135deg, #667eea 0%, #f093fb 100%);
+        color: white;
+        padding: 25px;
+        font-size: 1.3rem;
+        font-weight: 900;
+    }
+
+    .answer-item {
+        padding: 25px;
+        border-bottom: 1px solid #f0f0f0;
+        display: grid;
+        grid-template-columns: 50px 1fr auto;
+        gap: 20px;
+        align-items: start;
+    }
+
+    .answer-item:last-child {
+        border-bottom: none;
+    }
+
+    .answer-item:hover {
+        background: #f9f7ff;
+    }
+
+    .question-number {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, #667eea, #f093fb);
+        color: white;
+        border-radius: 50%;
+        font-weight: 900;
+        font-size: 1.1rem;
+    }
+
+    .answer-content h4 {
+        margin: 0 0 10px 0;
+        color: #1f2937;
+        font-weight: 700;
+        line-height: 1.6;
+    }
+
+    .answer-content p {
+        margin: 0;
+        color: #6b7280;
+    }
+
+    .answer-badge {
+        background: #fef3c7;
+        color: #b45309;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        white-space: nowrap;
+    }
+
+    .notes-section {
+        background: white;
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 5px 15px rgba(124, 58, 237, 0.1);
+    }
+
+    .notes-form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .notes-form textarea {
+        padding: 15px;
+        border: 2px solid #e5e7eb;
+        border-radius: 10px;
+        font-family: inherit;
+        font-size: 1rem;
+        resize: vertical;
+        min-height: 150px;
+    }
+
+    .notes-form textarea:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .notes-buttons {
+        display: flex;
+        gap: 10px;
+    }
+
+    .btn-save {
+        background: linear-gradient(135deg, #10b981, #059669);
+        color: white;
+        padding: 12px 30px;
+        border: none;
+        border-radius: 10px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+    }
+
+    .btn-save:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+    }
+
+    .btn-cancel {
+        background: #e5e7eb;
+        color: #374151;
+        padding: 12px 30px;
+        border: none;
+        border-radius: 10px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .btn-cancel:hover {
+        background: #d1d5db;
+        transform: translateY(-2px);
+    }
+
+    @media (max-width: 768px) {
+        .detail-header {
+            flex-direction: column;
+            gap: 20px;
+            text-align: center;
+        }
+
+        .detail-header h1 {
+            font-size: 1.5rem;
+        }
+
+        .status-form {
+            grid-template-columns: 1fr;
+        }
+
+        .answer-item {
+            grid-template-columns: 40px 1fr;
+            gap: 15px;
+        }
+
+        .answer-badge {
+            grid-column: 2;
+        }
+    }
+</style>
+
+<div class="detail-container">
+    <!-- Header -->
+    <div class="detail-header">
+        <h1>📋 Form Detayları</h1>
+        <a href="{% url 'online_therapy:psychologist_dashboard' %}" class="back-button">← Geri Dön</a>
+    </div>
+
+    <!-- Info Cards -->
+    <div class="info-grid">
+        <div class="info-card">
+            <div class="info-label">👤 Ad Soyad</div>
+            <div class="info-value">{{ form.name }}</div>
+        </div>
+        <div class="info-card">
+            <div class="info-label">🎂 Yaş</div>
+            <div class="info-value">{{ form.age }} yaş</div>
+        </div>
+        <div class="info-card">
+            <div class="info-label">📧 E-mail</div>
+            <div class="info-value">{{ form.email }}</div>
+        </div>
+        <div class="info-card">
+            <div class="info-label">📱 Telefon</div>
+            <div class="info-value">{{ form.phone }}</div>
+        </div>
+        <div class="info-card">
+            <div class="info-label">📝 Form Tipi</div>
+            <div class="info-value">{% if form.form_type == 'child' %}👧 Çocuk Formu{% else %}👨‍👩‍👧 Ebeveyn Formu{% endif %}</div>
+        </div>
+        <div class="info-card">
+            <div class="info-label">📅 Gönderim Tarihi</div>
+            <div class="info-value">{{ form.created_at|date:"d M Y - H:i" }}</div>
+        </div>
+    </div>
+
+    <!-- Status Update Section -->
+    <div class="status-section">
+        <h2 class="section-title">⚙️ Durum Güncelleme</h2>
+        <form method="post" class="status-form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="status">Formu Değerlendir:</label>
+                <select name="status" id="status" required>
+                    <option value="pending" {% if form.status == 'pending' %}selected{% endif %}>⏳ Beklemede</option>
+                    <option value="reviewed" {% if form.status == 'reviewed' %}selected{% endif %}>✓ İncelendi</option>
+                    <option value="completed" {% if form.status == 'completed' %}selected{% endif %}>✓✓ Tamamlandı</option>
+                </select>
+            </div>
+            <input type="hidden" name="action" value="update_status">
+            <button type="submit" class="btn-update">Durumu Güncelle</button>
+        </form>
+    </div>
+
+    <!-- Answers Section -->
+    <div class="answers-section">
+        <div class="answers-header">
+            📊 Sorular ve Cevaplar (15 Soru)
+        </div>
+        {% for qa in qa_pairs %}
+        <div class="answer-item">
+            <div class="question-number">{{ qa.number }}</div>
+            <div class="answer-content">
+                <h4>{{ qa.question }}</h4>
+                <p><strong>Cevap Değeri:</strong> {{ qa.answer }}/5</p>
+            </div>
+            <div class="answer-badge">{{ qa.label }}</div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Notes Section -->
+    <div class="notes-section">
+        <h2 class="section-title">📝 Psikolog Notları</h2>
+        <form method="post" class="notes-form">
+            {% csrf_token %}
+            <textarea name="notes" placeholder="Bu form hakkında notlarınızı yazın. İhtiyaç duydunuz mu? Özel tavsiyeleriniz nelerdir? Hasta ile görüşme planı...">{{ form.notes }}</textarea>
+            <div class="notes-buttons">
+                <button type="submit" name="action" value="update_notes" class="btn-save">💾 Notları Kaydet</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "Base.html" %}
+{% load static %}
+
+{% block extra_head %}
+<link href="{% static 'css/Home.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block body_class %}page-bg{% endblock %}
+
+{% block title %}Ana Sayfa - E-Rehber{% endblock %}
+
+{% block content %}
+<div class="p-4 bg-white rounded shadow-sm">
+	<h1 class="mb-3">Hoş geldiniz — E-Rehber</h1>
+	<p class="lead text-muted">
+		E-Rehber; psikolojik danışmanlık, online terapi ve uzman psikolog kadrosu ile yanınızda.
+		Mental sağlık yolculuğunuza güvenle başlayın.
+	</p>
+
+	<p>
+		<a class="btn btn-primary" href="{% url 'psikologlar' %}" role="button">Psikologları Gör</a>
+		<a class="btn btn-primary" href="{% url 'randevu_al' %}" role="button">Randevu Al</a>
+		<a class="btn btn-primary" href="{% url 'online_therapy:form' %}" role="button">Online Terapi</a>
+	</p>
+</div>
+{% endblock %}

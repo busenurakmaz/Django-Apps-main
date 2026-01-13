@@ -1,0 +1,87 @@
+{% extends "Base.html" %}
+{% load static %}
+
+{% block extra_head %}
+<link href="{% static 'css/Home.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block body_class %}page-bg{% endblock %}
+
+{% block title %}Sık Sorulan Sorular - E-Rehber{% endblock %}
+
+{% block content %}
+<div class="p-4 bg-white rounded shadow-sm">
+	<h1 class="mb-4">Sık Sorulan Sorular</h1>
+	
+	<div class="accordion" id="faqAccordion">
+		<div class="accordion-item">
+			<h2 class="accordion-header" id="headingOne">
+				<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+					Randevu nasıl alabilirim?
+				</button>
+			</h2>
+			<div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+				<div class="accordion-body">
+					Randevu almak için üst menüdeki "Randevu Al" butonuna tıklayabilir veya psikologlar sayfasından size uygun psikoloğu seçerek randevu oluşturabilirsiniz.
+				</div>
+			</div>
+		</div>
+		
+		<div class="accordion-item">
+			<h2 class="accordion-header" id="headingTwo">
+				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+					Online terapi nasıl çalışır?
+				</button>
+			</h2>
+			<div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+				<div class="accordion-body">
+					Online terapi, video konferans yoluyla güvenli bir şekilde gerçekleştirilen terapi seanslarıdır. Evden veya istediğiniz yerden, internet bağlantısı olan herhangi bir cihazdan katılabilirsiniz.
+				</div>
+			</div>
+		</div>
+		
+		<div class="accordion-item">
+			<h2 class="accordion-header" id="headingThree">
+				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree">
+					Terapi gizli midir?
+				</button>
+			</h2>
+			<div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+				<div class="accordion-body">
+					Evet, tüm terapi seansları ve paylaştığınız bilgiler tamamen gizlidir. Psikologlarımız etik kurallara ve gizlilik prensiplere uygun çalışır.
+				</div>
+			</div>
+		</div>
+		
+		<div class="accordion-item">
+			<h2 class="accordion-header" id="headingFour">
+				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour">
+					Seans ücreti ne kadardır?
+				</button>
+			</h2>
+			<div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+				<div class="accordion-body">
+					Seans ücretleri psikologlarımıza göre değişiklik gösterebilir. Detaylı bilgi için lütfen bizimle iletişime geçin veya randevu oluştururken görebilirsiniz.
+				</div>
+			</div>
+		</div>
+		
+		<div class="accordion-item">
+			<h2 class="accordion-header" id="headingFive">
+				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive">
+					Randevumu iptal edebilir miyim?
+				</button>
+			</h2>
+			<div id="collapseFive" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+				<div class="accordion-body">
+					Evet, randevunuzu en az 24 saat önceden iptal edebilirsiniz. Profil sayfanızdan randevularınızı görüntüleyip iptal edebilirsiniz.
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="mt-4">
+		<p class="text-muted">Sorunuz burada yok mu? <a href="{% url 'iletisim' %}">Bize ulaşın</a></p>
+	</div>
+</div>
+{% endblock %}

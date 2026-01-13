@@ -1,0 +1,59 @@
+{% extends "Base.html" %}
+{% load static %}
+
+{% block extra_head %}
+<link href="{% static 'css/Home.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block body_class %}page-bg{% endblock %}
+
+{% block title %}Hizmetlerimiz - E-Rehber{% endblock %}
+
+{% block content %}
+<div class="p-4 bg-white rounded shadow-sm">
+	<h1 class="mb-4">Hizmetlerimiz</h1>
+	
+	<div class="row">
+		<div class="col-md-6 mb-4">
+			<div class="card h-100">
+				<div class="card-body">
+					<h5 class="card-title">👤 Bireysel Terapi</h5>
+					<p class="card-text">Kişisel gelişim, kaygı, depresyon ve diğer psikolojik sorunlar için birebir terapi hizmeti sunuyoruz.</p>
+				</div>
+			</div>
+		</div>
+		
+		<div class="col-md-6 mb-4">
+			<div class="card h-100">
+				<div class="card-body">
+					<h5 class="card-title">👨‍👩‍👧‍👦 Aile & Çift Terapisi</h5>
+					<p class="card-text">İlişki sorunları, evlilik terapisi ve aile içi iletişim problemleri için profesyonel destek.</p>
+				</div>
+			</div>
+		</div>
+		
+		<div class="col-md-6 mb-4">
+			<div class="card h-100">
+				<div class="card-body">
+					<h5 class="card-title">🧒 Çocuk ve Ergen Danışmanlığı</h5>
+					<p class="card-text">Çocuk ve ergenlerin davranış problemleri, okul başarısızlığı ve gelişimsel sorunları için uzman desteği.</p>
+				</div>
+			</div>
+		</div>
+		
+		<div class="col-md-6 mb-4">
+			<div class="card h-100">
+				<div class="card-body">
+					<h5 class="card-title">💻 Online Terapi</h5>
+					<p class="card-text">Evden çıkmadan, güvenli ve gizli ortamda online terapi seansları. Esneklik ve konfor bir arada.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="mt-4">
+		<a href="{% url 'randevu_al' %}" class="btn btn-primary">Randevu Al</a>
+		<a href="{% url 'iletisim' %}" class="btn btn-outline-primary">Bize Ulaşın</a>
+	</div>
+</div>
+{% endblock %}

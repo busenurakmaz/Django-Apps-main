@@ -1,0 +1,619 @@
+{% extends "Base.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        overflow-x: hidden;
+    }
+
+    /* Hero Section */
+    .hero-section {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%);
+        background-size: 400% 400%;
+        color: white;
+        padding: 120px 20px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        animation: gradientShift 15s ease infinite;
+        min-height: 700px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+        border-radius: 50%;
+        top: -100px;
+        right: -150px;
+        animation: float 8s ease-in-out infinite;
+        filter: blur(40px);
+    }
+
+    .hero-section::after {
+        content: '';
+        position: absolute;
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 70%);
+        border-radius: 50%;
+        bottom: -200px;
+        left: -200px;
+        animation: float 10s ease-in-out infinite reverse;
+        filter: blur(50px);
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 1;
+        max-width: 950px;
+        margin: 0 auto;
+        animation: slideInDown 1s ease-out;
+        backdrop-filter: blur(15px);
+        background: rgba(255, 255, 255, 0.08);
+        padding: 70px 60px;
+        border-radius: 35px;
+        border: 2px solid rgba(255, 255, 255, 0.25);
+        box-shadow: 0 20px 60px rgba(31, 38, 135, 0.4);
+    }
+
+    .hero-content h1 {
+        font-size: 5rem;
+        font-weight: 900;
+        margin-bottom: 30px;
+        letter-spacing: -3px;
+        text-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+        background: linear-gradient(45deg, #ffffff 0%, #f0f0f0 50%, #ffffff 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: slideInDown 1.2s ease-out;
+    }
+
+    .hero-content p {
+        font-size: 1.3rem;
+        margin-bottom: 18px;
+        opacity: 0.98;
+        line-height: 1.9;
+        font-weight: 300;
+        letter-spacing: 0.6px;
+        animation: fadeInUp 1.2s ease-out 0.2s both;
+    }
+
+    /* Features Section */
+    .features-section {
+        padding: 120px 20px;
+        background: linear-gradient(135deg, #f5f3ff 0%, #fff5f7 50%, #f0fdf4 100%);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .features-section::before {
+        content: '';
+        position: absolute;
+        width: 800px;
+        height: 800px;
+        background: radial-gradient(circle, rgba(124, 58, 237, 0.1) 0%, transparent 70%);
+        border-radius: 50%;
+        top: -300px;
+        left: -400px;
+        z-index: 0;
+    }
+
+    .features-section::after {
+        content: '';
+        position: absolute;
+        width: 800px;
+        height: 800px;
+        background: radial-gradient(circle, rgba(236, 72, 153, 0.1) 0%, transparent 70%);
+        border-radius: 50%;
+        bottom: -300px;
+        right: -400px;
+        z-index: 0;
+    }
+
+    .section-title {
+        text-align: center;
+        margin-bottom: 100px;
+        font-size: 3.5rem;
+        font-weight: 900;
+        color: #1f2937;
+        animation: fadeInUp 0.8s ease-out;
+        position: relative;
+        z-index: 1;
+        letter-spacing: -2px;
+    }
+
+    .section-title .highlight {
+        background: linear-gradient(135deg, #667eea, #f093fb);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-size: 3.8rem;
+        font-weight: 900;
+    }
+
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+        gap: 45px;
+        max-width: 1400px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+    }
+
+    .feature-card {
+        background: white;
+        border-radius: 30px;
+        padding: 55px 45px;
+        box-shadow: 0 25px 70px rgba(124, 58, 237, 0.15);
+        transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1);
+        border: 2px solid transparent;
+        animation: fadeInUp 0.8s ease-out;
+        position: relative;
+        overflow: hidden;
+        backdrop-filter: blur(10px);
+    }
+
+    .feature-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 5px;
+        background: linear-gradient(90deg, #667eea, #f093fb);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.5s cubic-bezier(0.23, 1, 0.320, 1);
+    }
+
+    .feature-card:hover::before {
+        transform: scaleX(1);
+    }
+
+    .feature-card:hover {
+        transform: translateY(-20px);
+        box-shadow: 0 50px 120px rgba(124, 58, 237, 0.3);
+        border-color: rgba(124, 58, 237, 0.4);
+        background: linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(249, 243, 255, 0.6) 100%);
+    }
+
+    .feature-icon {
+        width: 90px;
+        height: 90px;
+        background: linear-gradient(135deg, #667eea, #f093fb);
+        border-radius: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 45px;
+        margin-bottom: 35px;
+        transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1);
+        box-shadow: 0 20px 50px rgba(124, 58, 237, 0.35);
+    }
+
+    .feature-card:hover .feature-icon {
+        transform: rotate(25deg) scale(1.15);
+        box-shadow: 0 35px 80px rgba(124, 58, 237, 0.5);
+    }
+
+    .feature-card h3 {
+        font-size: 1.7rem;
+        color: #1f2937;
+        margin-bottom: 22px;
+        font-weight: 800;
+        letter-spacing: -0.7px;
+    }
+
+    .feature-card p {
+        color: #6b7280;
+        line-height: 1.85;
+        font-size: 1rem;
+        font-weight: 300;
+    }
+
+    /* Stats Section */
+    .stats-section {
+        padding: 90px 20px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%);
+        background-size: 400% 400%;
+        animation: gradientShift 15s ease infinite;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 50px;
+        max-width: 1300px;
+        margin: 80px auto;
+        position: relative;
+        border-radius: 40px;
+        color: white;
+        box-shadow: 0 40px 100px rgba(124, 58, 237, 0.35);
+    }
+
+    .stat-box {
+        text-align: center;
+        animation: fadeInUp 0.8s ease-out;
+        backdrop-filter: blur(15px);
+        padding: 45px;
+        border-radius: 25px;
+        background: rgba(255, 255, 255, 0.12);
+        border: 2px solid rgba(255, 255, 255, 0.25);
+        transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+    }
+
+    .stat-box:hover {
+        background: rgba(255, 255, 255, 0.18);
+        transform: translateY(-10px);
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
+        border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .stat-number {
+        font-size: 4rem;
+        font-weight: 900;
+        color: white;
+        text-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+        margin-bottom: 15px;
+        letter-spacing: -1px;
+    }
+
+    .stat-label {
+        color: rgba(255, 255, 255, 0.95);
+        margin-top: 15px;
+        font-size: 1.2rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+
+    /* CTA Section */
+    .cta-section {
+        padding: 120px 20px;
+        text-align: center;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%);
+        background-size: 400% 400%;
+        animation: gradientShift 15s ease infinite;
+        color: white;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .cta-section::before {
+        content: '';
+        position: absolute;
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 70%);
+        border-radius: 50%;
+        top: -150px;
+        right: -200px;
+        filter: blur(70px);
+    }
+
+    .cta-section::after {
+        content: '';
+        position: absolute;
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+        border-radius: 50%;
+        bottom: -100px;
+        left: -150px;
+        filter: blur(60px);
+    }
+
+    .cta-content {
+        position: relative;
+        z-index: 1;
+        max-width: 850px;
+        margin: 0 auto;
+        animation: slideInUp 0.8s ease-out;
+        backdrop-filter: blur(15px);
+        background: rgba(255, 255, 255, 0.1);
+        padding: 70px 60px;
+        border-radius: 35px;
+        border: 2px solid rgba(255, 255, 255, 0.25);
+        box-shadow: 0 20px 60px rgba(31, 38, 135, 0.4);
+    }
+
+    .cta-content h2 {
+        font-size: 3.5rem;
+        margin-bottom: 30px;
+        font-weight: 900;
+        letter-spacing: -2px;
+        text-shadow: 0 6px 25px rgba(0, 0, 0, 0.25);
+    }
+
+    .cta-content p {
+        font-size: 1.25rem;
+        margin-bottom: 50px;
+        opacity: 0.98;
+        line-height: 1.9;
+        font-weight: 300;
+        letter-spacing: 0.5px;
+    }
+
+    /* Buttons */
+    .btn-primary {
+        display: inline-block;
+        background: white;
+        color: #667eea;
+        padding: 20px 55px;
+        border-radius: 18px;
+        font-weight: 800;
+        text-decoration: none;
+        transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1);
+        border: none;
+        cursor: pointer;
+        font-size: 1.1rem;
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+        margin: 15px;
+        letter-spacing: 0.6px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .btn-primary::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+        transition: left 0.6s;
+    }
+
+    .btn-primary:hover::before {
+        left: 100%;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-7px);
+        box-shadow: 0 40px 90px rgba(124, 58, 237, 0.5);
+        background: #f8f6ff;
+    }
+
+    .btn-secondary {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.18);
+        color: white;
+        padding: 20px 55px;
+        border-radius: 18px;
+        font-weight: 800;
+        text-decoration: none;
+        transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1);
+        border: 2px solid rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+        font-size: 1.1rem;
+        margin: 15px;
+        letter-spacing: 0.6px;
+        backdrop-filter: blur(10px);
+    }
+
+    .btn-secondary:hover {
+        background: rgba(255, 255, 255, 0.25);
+        border-color: white;
+        transform: translateY(-7px);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Footer */
+    .footer-section {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        color: white;
+        padding: 60px 20px;
+        text-align: center;
+        position: relative;
+        border-top: 2px solid rgba(124, 58, 237, 0.2);
+    }
+
+    .footer-section p {
+        margin: 12px 0;
+        font-weight: 300;
+        letter-spacing: 0.3px;
+    }
+
+    .footer-section a {
+        color: #667eea;
+        text-decoration: none;
+        font-weight: 700;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    .footer-section a::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: #f093fb;
+        transition: width 0.3s ease;
+    }
+
+    .footer-section a:hover::after {
+        width: 100%;
+    }
+
+    .footer-section a:hover {
+        color: #f093fb;
+    }
+
+    /* Animations */
+    @keyframes slideInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes slideInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes float {
+        0%, 100% {
+            transform: translateY(0px);
+        }
+        50% {
+            transform: translateY(20px);
+        }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .hero-content h1 {
+            font-size: 2rem;
+        }
+
+        .hero-content p {
+            font-size: 1rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+        }
+
+        .cta-content h2 {
+            font-size: 1.8rem;
+        }
+
+        .features-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .btn-primary,
+        .btn-secondary {
+            display: block;
+            margin: 10px 0;
+        }
+    }
+</style>
+
+<!-- Hero Section -->
+<div class="hero-section">
+    <div class="hero-content">
+        <h1>✨ e-Rehber</h1>
+        <p>Çocuklarınızın ve Ailenizin Ruh Sağlığı İçin Profesyonel Rehberlik</p>
+        <p style="font-size: 1.1rem; opacity: 0.95; margin-bottom: 0;">🧠 Bilimsel temellere dayanan, deneyimli psikologlar tarafından sunulan online terapi hizmetleri</p>
+    </div>
+</div>
+
+<!-- Stats Section -->
+<div class="stats-section">
+    <div class="stat-box">
+        <div class="stat-number">15+</div>
+        <div class="stat-label">Bilimsel Soru</div>
+    </div>
+    <div class="stat-box">
+        <div class="stat-number">2</div>
+        <div class="stat-label">Uzmanlaşmış Form</div>
+    </div>
+    <div class="stat-box">
+        <div class="stat-number">∞</div>
+        <div class="stat-label">Kişiye Özel Yol</div>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="features-section">
+    <h2 class="section-title">Neden <span class="highlight">e-Rehber'i</span> Seçmelisiniz?</h2>
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">👧</div>
+            <h3>Çocuklar İçin Form</h3>
+            <p>Çocuğunuzun gelişimsel özellikleri ve yaş grubuna uygun özel olarak hazırlanmış 15 soruluk bilimsel değerlendirme formu. Ruh sağlığını anlamak için ilk adım.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">👨‍👩‍👧</div>
+            <h3>Ebeveynler İçin Form</h3>
+            <p>Ebeveyn perspektifinden aile dinamikleri ve çocuğun davranışlarını değerlendirmeye yönelik kapsamlı form. Objektif gözlemleriniz çok önemli.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🎯</div>
+            <h3>Uzman Değerlendirme</h3>
+            <p>Deneyimli psikologlarımız formunuzu dikkatlice inceleyip detaylı geri bildirimi içeren profesyonel analiz yapıyor. Veriler gizlidir.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">💬</div>
+            <h3>Birebir Görüşme</h3>
+            <p>Değerlendirme sonrasında psikologlarımızla birebir görüşme yaparak özel rehberlik, tavsiyeler ve eylem planı alabilirsiniz.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🔒</div>
+            <h3>Tam Gizlilik</h3>
+            <p>Tüm kişisel bilgileriniz ve verileriniz tamamen gizlidir ve profesyonel etik standartlarına uygun şekilde işlenir. Güvenlik garantili.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>Hızlı Sonuçlar</h3>
+            <p>Formu gönderdikten sonra 24-48 saat içinde psikologlarımızın detaylı değerlendirmesini alın. Zaman önemli, biz de farkındayız.</p>
+        </div>
+    </div>
+</div>
+
+<!-- CTA Section -->
+<div class="cta-section">
+    <div class="cta-content">
+        <h2>🚀 Hemen Başlayın</h2>
+        <p>Çocuğunuzun veya ailenizin duygusal ve davranışsal durumunu profesyonelce değerlendirmek için şu anda başlamak en iyi zamandır.</p>
+        <a href="{% url 'online_therapy:form' %}" class="btn-primary">→ Formu Doldur</a>
+        <a href="#" class="btn-secondary">Daha Fazla Bilgi</a>
+    </div>
+</div>
+
+<!-- Footer -->
+<div class="footer-section">
+    <p><strong>© 2026 e-Rehber</strong> - Ruh Sağlığı Platformu</p>
+    <p style="margin-top: 20px; font-size: 0.95rem;">
+        📧 İletişim: <a href="mailto:info@erehber.com">info@erehber.com</a> | 
+        📱 Tel: <a href="tel:+905551234567">+90 555 123 4567</a>
+    </p>
+    <p style="margin-top: 15px; font-size: 0.85rem; opacity: 0.7;">
+        Tüm hizmetlerimiz profesyonel psikologlar tarafından sağlanmaktadır. | Gizliliğiniz garantilidir.
+    </p>
+</div>
+
+{% endblock %}

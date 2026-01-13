@@ -1,0 +1,456 @@
+{% extends "Base.html" %}
+
+{% block content %}
+<style>
+    .dashboard-container {
+        background: linear-gradient(135deg, #f5f3ff 0%, #fff5f7 100%);
+        min-height: 100vh;
+        padding: 40px 20px;
+    }
+
+    .dashboard-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%);
+        background-size: 400% 400%;
+        animation: gradientShift 15s ease infinite;
+        color: white;
+        padding: 40px;
+        border-radius: 25px;
+        margin-bottom: 40px;
+        box-shadow: 0 20px 60px rgba(124, 58, 237, 0.3);
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+
+    @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    .dashboard-header h1 {
+        font-size: 2.5rem;
+        margin: 0;
+        font-weight: 900;
+        letter-spacing: -1px;
+    }
+
+    .dashboard-header p {
+        margin: 10px 0 0 0;
+        opacity: 0.95;
+        font-size: 1.05rem;
+    }
+
+    .filters-section {
+        background: white;
+        padding: 30px;
+        border-radius: 20px;
+        margin-bottom: 30px;
+        box-shadow: 0 10px 30px rgba(124, 58, 237, 0.1);
+    }
+
+    .filters-row {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-bottom: 20px;
+    }
+
+    .filter-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .filter-group label {
+        font-weight: 600;
+        color: #1f2937;
+        margin-bottom: 8px;
+        font-size: 0.9rem;
+        letter-spacing: 0.5px;
+    }
+
+    .filter-group select,
+    .filter-group input {
+        padding: 12px 15px;
+        border: 2px solid #e5e7eb;
+        border-radius: 10px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        font-family: inherit;
+    }
+
+    .filter-group select:focus,
+    .filter-group input:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .filter-buttons {
+        display: flex;
+        gap: 10px;
+    }
+
+    .btn-search {
+        background: linear-gradient(135deg, #667eea, #f093fb);
+        color: white;
+        padding: 12px 25px;
+        border: none;
+        border-radius: 10px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+    }
+
+    .btn-search:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-reset {
+        background: #e5e7eb;
+        color: #374151;
+        padding: 12px 25px;
+        border: none;
+        border-radius: 10px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .btn-reset:hover {
+        background: #d1d5db;
+        transform: translateY(-2px);
+    }
+
+    .forms-table {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 10px 40px rgba(124, 58, 237, 0.12);
+    }
+
+    .table-wrapper {
+        overflow-x: auto;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    thead {
+        background: linear-gradient(135deg, #667eea 0%, #f093fb 100%);
+        color: white;
+        font-weight: 700;
+    }
+
+    th {
+        padding: 20px;
+        text-align: left;
+        letter-spacing: 0.5px;
+    }
+
+    tbody tr {
+        border-bottom: 1px solid #f0f0f0;
+        transition: all 0.3s ease;
+    }
+
+    tbody tr:hover {
+        background: #f9f7ff;
+    }
+
+    tbody tr:last-child {
+        border-bottom: none;
+    }
+
+    td {
+        padding: 20px;
+        color: #4b5563;
+    }
+
+    .status-badge {
+        display: inline-block;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        letter-spacing: 0.5px;
+    }
+
+    .status-pending {
+        background: #fef3c7;
+        color: #b45309;
+    }
+
+    .status-reviewed {
+        background: #bfdbfe;
+        color: #1e40af;
+    }
+
+    .status-completed {
+        background: #bbf7d0;
+        color: #065f46;
+    }
+
+    .form-type-badge {
+        display: inline-block;
+        padding: 6px 12px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 0.85rem;
+    }
+
+    .form-type-child {
+        background: #f0e6ff;
+        color: #6b21a8;
+    }
+
+    .form-type-parent {
+        background: #e0f2fe;
+        color: #075985;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 10px;
+    }
+
+    .btn-view {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+    }
+
+    .btn-view:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 60px 40px;
+        background: white;
+        border-radius: 20px;
+        color: #9ca3af;
+    }
+
+    .empty-state-icon {
+        font-size: 4rem;
+        margin-bottom: 20px;
+    }
+
+    .empty-state h3 {
+        color: #4b5563;
+        margin: 15px 0;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .stat-card {
+        background: white;
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(124, 58, 237, 0.1);
+        border-left: 5px solid;
+        transition: all 0.3s ease;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(124, 58, 237, 0.2);
+    }
+
+    .stat-card.pending {
+        border-left-color: #f59e0b;
+    }
+
+    .stat-card.reviewed {
+        border-left-color: #3b82f6;
+    }
+
+    .stat-card.completed {
+        border-left-color: #10b981;
+    }
+
+    .stat-card.total {
+        border-left-color: #667eea;
+    }
+
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: 900;
+        background: linear-gradient(135deg, #667eea, #f093fb);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin: 10px 0;
+    }
+
+    .stat-label {
+        color: #6b7280;
+        font-weight: 600;
+        font-size: 0.95rem;
+    }
+
+    @media (max-width: 768px) {
+        .dashboard-header h1 {
+            font-size: 1.8rem;
+        }
+
+        .filters-row {
+            grid-template-columns: 1fr;
+        }
+
+        table {
+            font-size: 0.9rem;
+        }
+
+        th, td {
+            padding: 15px 10px;
+        }
+
+        .action-buttons {
+            flex-direction: column;
+        }
+
+        .btn-view {
+            display: block;
+            text-align: center;
+        }
+    }
+</style>
+
+<div class="dashboard-container">
+    <!-- Header -->
+    <div class="dashboard-header">
+        <h1>👨‍⚕️ Psikolog Kontrol Paneli</h1>
+        <p>Gönderilen tüm terapi formlarını yönetip değerlendirin</p>
+    </div>
+
+    <!-- Stats -->
+    {% with total=forms.count pending=forms|dictsort:"status"|slice:"0:1" reviewed=forms.filter|dictsort:"status"|slice:"1:2" completed=forms.filter|dictsort:"status"|slice:"2:3" %}
+    <div class="stats-grid">
+        <div class="stat-card total">
+            <div class="stat-label">Toplam Form</div>
+            <div class="stat-number">{{ total }}</div>
+        </div>
+        <div class="stat-card pending">
+            <div class="stat-label">Beklemede</div>
+            <div class="stat-number">{{ forms|dictsort:"status=pending"|length }}</div>
+        </div>
+        <div class="stat-card reviewed">
+            <div class="stat-label">İncelendi</div>
+            <div class="stat-number">{{ forms|dictsort:"status=reviewed"|length }}</div>
+        </div>
+        <div class="stat-card completed">
+            <div class="stat-label">Tamamlandı</div>
+            <div class="stat-number">{{ forms|dictsort:"status=completed"|length }}</div>
+        </div>
+    </div>
+    {% endwith %}
+
+    <!-- Filters -->
+    <div class="filters-section">
+        <form method="get" class="filters-form">
+            <div class="filters-row">
+                <div class="filter-group">
+                    <label for="form_type">Form Tipi</label>
+                    <select name="form_type" id="form_type">
+                        <option value="">Tümü</option>
+                        <option value="child" {% if form_type_filter == 'child' %}selected{% endif %}>Çocuk</option>
+                        <option value="parent" {% if form_type_filter == 'parent' %}selected{% endif %}>Ebeveyn</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="status">Durum</label>
+                    <select name="status" id="status">
+                        <option value="">Tümü</option>
+                        <option value="pending" {% if status_filter == 'pending' %}selected{% endif %}>Beklemede</option>
+                        <option value="reviewed" {% if status_filter == 'reviewed' %}selected{% endif %}>İncelendi</option>
+                        <option value="completed" {% if status_filter == 'completed' %}selected{% endif %}>Tamamlandı</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="search">İsim, E-mail veya Telefon</label>
+                    <input type="text" name="search" id="search" placeholder="Arama yapın..." value="{{ search_query }}">
+                </div>
+            </div>
+            <div class="filter-buttons">
+                <button type="submit" class="btn-search">🔍 Ara</button>
+                <a href="{% url 'online_therapy:psychologist_dashboard' %}" class="btn-reset">↺ Sıfırla</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Forms Table -->
+    {% if forms %}
+    <div class="forms-table">
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Ad Soyad</th>
+                        <th>Form Tipi</th>
+                        <th>İletişim</th>
+                        <th>Durum</th>
+                        <th>Gönderim Tarihi</th>
+                        <th>İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for form in forms %}
+                    <tr>
+                        <td><strong>{{ form.name }}</strong></td>
+                        <td>
+                            <span class="form-type-badge form-type-{% if form.form_type == 'child' %}child{% else %}parent{% endif %}">
+                                {% if form.form_type == 'child' %}👧 Çocuk{% else %}👨‍👩‍👧 Ebeveyn{% endif %}
+                            </span>
+                        </td>
+                        <td>
+                            <div>📧 {{ form.email }}</div>
+                            <div>📱 {{ form.phone }}</div>
+                        </td>
+                        <td>
+                            <span class="status-badge status-{{ form.status }}">
+                                {% if form.status == 'pending' %}⏳ Beklemede
+                                {% elif form.status == 'reviewed' %}✓ İncelendi
+                                {% else %}✓✓ Tamamlandı
+                                {% endif %}
+                            </span>
+                        </td>
+                        <td>{{ form.created_at|date:"d M Y - H:i" }}</td>
+                        <td>
+                            <div class="action-buttons">
+                                <a href="{% url 'online_therapy:form_detail' form.pk %}" class="btn-view">Detaylar</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <div class="empty-state-icon">📋</div>
+        <h3>Form Bulunamadı</h3>
+        <p>Belirtilen kriterlere uygun form bulunamadı.</p>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}

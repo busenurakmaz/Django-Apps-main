@@ -1,0 +1,67 @@
+{% extends "Base.html" %}
+{% load static %}
+
+{% block extra_head %}
+<link href="{% static 'css/Home.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block body_class %}page-bg{% endblock %}
+
+{% block title %}İletişim - E-Rehber{% endblock %}
+
+{% block content %}
+<div class="p-4 bg-white rounded shadow-sm">
+	<h1 class="mb-4">İletişim</h1>
+	
+	<div class="row">
+		<div class="col-md-6">
+			<h5 class="mb-3">Bize Ulaşın</h5>
+			
+			<div class="mb-3">
+				<strong>📧 E-posta:</strong><br>
+				<a href="mailto:info@e-rehber.com">info@e-rehber.com</a>
+			</div>
+			
+			<div class="mb-3">
+				<strong>📞 Telefon:</strong><br>
+				0 (850) 555 55 55
+			</div>
+			
+			<div class="mb-3">
+				<strong>🕐 Çalışma Saatleri:</strong><br>
+				Pazartesi - Cuma: 09:00 - 18:00<br>
+				Cumartesi: 10:00 - 16:00<br>
+				Pazar: Kapalı
+			</div>
+			
+			<div class="mb-3">
+				<strong>📍 Adres:</strong><br>
+				İstanbul, Türkiye
+			</div>
+		</div>
+		
+		<div class="col-md-6">
+			<h5 class="mb-3">Mesaj Gönderin</h5>
+			<form>
+				<div class="mb-3">
+					<label class="form-label">Adınız Soyadınız</label>
+					<input type="text" class="form-control" required>
+				</div>
+				<div class="mb-3">
+					<label class="form-label">E-posta</label>
+					<input type="email" class="form-control" required>
+				</div>
+				<div class="mb-3">
+					<label class="form-label">Telefon</label>
+					<input type="tel" class="form-control">
+				</div>
+				<div class="mb-3">
+					<label class="form-label">Mesajınız</label>
+					<textarea class="form-control" rows="4" required></textarea>
+				</div>
+				<button type="submit" class="btn btn-primary">Gönder</button>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}

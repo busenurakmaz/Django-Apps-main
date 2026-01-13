@@ -1,0 +1,303 @@
+{% extends "Base.html" %}
+{% load static %}
+
+{% block extra_head %}
+<link href="{% static 'css/Home.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block body_class %}page-bg{% endblock %}
+
+{% block title %}Online Terapi Formu - E-Rehber{% endblock %}
+
+{% block content %}
+<div class="p-4 bg-white rounded shadow-sm">
+  <h3 class="mb-3">💜 Online Terapi Formu</h3>
+  <p class="lead text-muted mb-4">Profesyonel Psikolojik Danışmanlık İçin Sizi Tanıyalım</p>
+          
+          <form method="post" novalidate id="therapyForm">
+            {% csrf_token %}
+            
+            <!-- Kişisel Bilgiler -->
+            <h5 class="mt-4 mb-3">👤 Kişisel Bilgileriniz</h5>
+            <p class="text-muted small mb-3">Başlangıç için lütfen temel bilgilerinizi paylaşın</p>
+            
+            <div class="mb-3">
+              <label class="form-label">Siz kimsiniz?</label>
+              {{ form.form_type }}
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Adınız ve Soyadınız</label>
+              {{ form.name }}
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="form-label">Yaşınız</label>
+                  {{ form.age }}
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="form-label">Telefon Numaranız</label>
+                  {{ form.phone }}
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">E-mail Adresiniz</label>
+              {{ form.email }}
+            </div>
+            
+            <!-- Sorular -->
+            <h5 class="mt-5 mb-3">📋 Değerlendirme Soruları</h5>
+            <p class="text-muted small mb-4">Lütfen her soruya samimi bir şekilde yanıt verin (1-5 ölçeği)</p>
+            
+            <!-- Soru 1 -->
+            <div class="mb-4 p-3 border rounded bg-light">
+              <strong class="d-block mb-2">1. {{ form.question1.label }}</strong>
+              <div>
+                {% for value, label in form.question1.field.choices %}
+                  <div class="form-check">
+                    <input type="radio" class="form-check-input" id="q1_{{ value }}" name="question1" value="{{ value }}" {% if form.question1.value == value %}checked{% endif %}>
+                    <label class="form-check-label" for="q1_{{ value }}">
+                      {{ value }} - {{ label }}
+                    </label>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+            
+            <!-- Soru 2 -->
+            <div class="mb-4 p-3 border rounded bg-light">
+              <strong class="d-block mb-2">2. {{ form.question2.label }}</strong>
+              <div>
+                {% for value, label in form.question2.field.choices %}
+                  <div class="form-check">
+                    <input type="radio" class="form-check-input" id="q2_{{ value }}" name="question2" value="{{ value }}" {% if form.question2.value == value %}checked{% endif %}>
+                    <label class="form-check-label" for="q2_{{ value }}">
+                      {{ value }} - {{ label }}
+                    </label>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+            
+            <!-- Soru 3 -->
+            <div class="mb-4 p-3 border rounded bg-light">
+              <strong class="d-block mb-2">3. {{ form.question3.label }}</strong>
+              <div>
+                {% for value, label in form.question3.field.choices %}
+                  <div class="form-check">
+                    <input type="radio" class="form-check-input" id="q3_{{ value }}" name="question3" value="{{ value }}" {% if form.question3.value == value %}checked{% endif %}>
+                    <label class="form-check-label" for="q3_{{ value }}">
+                      {{ value }} - {{ label }}
+                    </label>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+            
+            <!-- Soru 4 -->
+            <div class="mb-4 p-3 border rounded bg-light">
+              <strong class="d-block mb-2">4. {{ form.question4.label }}</strong>
+              <div>
+                {% for value, label in form.question4.field.choices %}
+                  <div class="form-check">
+                    <input type="radio" class="form-check-input" id="q4_{{ value }}" name="question4" value="{{ value }}" {% if form.question4.value == value %}checked{% endif %}>
+                    <label class="form-check-label" for="q4_{{ value }}">
+                      {{ value }} - {{ label }}
+                    </label>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+            
+            <!-- Soru 5 -->
+            <div class="mb-4 p-3 border rounded bg-light">
+              <strong class="d-block mb-2">5. {{ form.question5.label }}</strong>
+              <div>
+                {% for value, label in form.question5.field.choices %}
+                  <div class="form-check">
+                    <input type="radio" class="form-check-input" id="q5_{{ value }}" name="question5" value="{{ value }}" {% if form.question5.value == value %}checked{% endif %}>
+                    <label class="form-check-label" for="q5_{{ value }}">
+                      {{ value }} - {{ label }}
+                    </label>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+            
+            <!-- Soru 6 -->
+            <div class="mb-4 p-3 border rounded bg-light">
+              <strong class="d-block mb-2">6. {{ form.question6.label }}</strong>
+              <div>
+                {% for value, label in form.question6.field.choices %}
+                  <div class="form-check">
+                    <input type="radio" class="form-check-input" id="q6_{{ value }}" name="question6" value="{{ value }}" {% if form.question6.value == value %}checked{% endif %}>
+                    <label class="form-check-label" for="q6_{{ value }}">
+                      {{ value }} - {{ label }}
+                    </label>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+            
+            <!-- Soru 7 -->
+            <div class="mb-4 p-3 border rounded bg-light">
+              <strong class="d-block mb-2">7. {{ form.question7.label }}</strong>
+              <div>
+                {% for value, label in form.question7.field.choices %}
+                  <div class="form-check">
+                    <input type="radio" class="form-check-input" id="q7_{{ value }}" name="question7" value="{{ value }}" {% if form.question7.value == value %}checked{% endif %}>
+                    <label class="form-check-label" for="q7_{{ value }}">
+                      {{ value }} - {{ label }}
+                    </label>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+            
+            <!-- Soru 8 -->
+            <div class="mb-4 p-3 border rounded bg-light">
+              <strong class="d-block mb-2">8. {{ form.question8.label }}</strong>
+              <div>
+                {% for value, label in form.question8.field.choices %}
+                  <div class="form-check">
+                    <input type="radio" class="form-check-input" id="q8_{{ value }}" name="question8" value="{{ value }}" {% if form.question8.value == value %}checked{% endif %}>
+                    <label class="form-check-label" for="q8_{{ value }}">
+                      {{ value }} - {{ label }}
+                    </label>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+            
+            <!-- Soru 9 -->
+            <div class="mb-4 p-3 border rounded bg-light">
+              <strong class="d-block mb-2">9. {{ form.question9.label }}</strong>
+              <div>
+                {% for value, label in form.question9.field.choices %}
+                  <div class="form-check">
+                    <input type="radio" class="form-check-input" id="q9_{{ value }}" name="question9" value="{{ value }}" {% if form.question9.value == value %}checked{% endif %}>
+                    <label class="form-check-label" for="q9_{{ value }}">
+                      {{ value }} - {{ label }}
+                    </label>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+            
+            <!-- Soru 10 -->
+            <div class="mb-4 p-3 border rounded bg-light">
+              <strong class="d-block mb-2">10. {{ form.question10.label }}</strong>
+              <div>
+                {% for value, label in form.question10.field.choices %}
+                  <div class="form-check">
+                    <input type="radio" class="form-check-input" id="q10_{{ value }}" name="question10" value="{{ value }}" {% if form.question10.value == value %}checked{% endif %}>
+                    <label class="form-check-label" for="q10_{{ value }}">
+                      {{ value }} - {{ label }}
+                    </label>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+            
+            <!-- Soru 11 -->
+            <div class="mb-4 p-3 border rounded bg-light">
+              <strong class="d-block mb-2">11. {{ form.question11.label }}</strong>
+              <div>
+                {% for value, label in form.question11.field.choices %}
+                  <div class="form-check">
+                    <input type="radio" class="form-check-input" id="q11_{{ value }}" name="question11" value="{{ value }}" {% if form.question11.value == value %}checked{% endif %}>
+                    <label class="form-check-label" for="q11_{{ value }}">
+                      {{ value }} - {{ label }}
+                    </label>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+            
+            <!-- Soru 12 -->
+            <div class="mb-4 p-3 border rounded bg-light">
+              <strong class="d-block mb-2">12. {{ form.question12.label }}</strong>
+              <div>
+                {% for value, label in form.question12.field.choices %}
+                  <div class="form-check">
+                    <input type="radio" class="form-check-input" id="q12_{{ value }}" name="question12" value="{{ value }}" {% if form.question12.value == value %}checked{% endif %}>
+                    <label class="form-check-label" for="q12_{{ value }}">
+                      {{ value }} - {{ label }}
+                    </label>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+            
+            <!-- Soru 13 -->
+            <div class="mb-4 p-3 border rounded bg-light">
+              <strong class="d-block mb-2">13. {{ form.question13.label }}</strong>
+              <div>
+                {% for value, label in form.question13.field.choices %}
+                  <div class="form-check">
+                    <input type="radio" class="form-check-input" id="q13_{{ value }}" name="question13" value="{{ value }}" {% if form.question13.value == value %}checked{% endif %}>
+                    <label class="form-check-label" for="q13_{{ value }}">
+                      {{ value }} - {{ label }}
+                    </label>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+            
+            <!-- Soru 14 -->
+            <div class="mb-4 p-3 border rounded bg-light">
+              <strong class="d-block mb-2">14. {{ form.question14.label }}</strong>
+              <div>
+                {% for value, label in form.question14.field.choices %}
+                  <div class="form-check">
+                    <input type="radio" class="form-check-input" id="q14_{{ value }}" name="question14" value="{{ value }}" {% if form.question14.value == value %}checked{% endif %}>
+                    <label class="form-check-label" for="q14_{{ value }}">
+                      {{ value }} - {{ label }}
+                    </label>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+            
+            <!-- Soru 15 -->
+            <div class="mb-4 p-3 border rounded bg-light">
+              <strong class="d-block mb-2">15. {{ form.question15.label }}</strong>
+              <div>
+                {% for value, label in form.question15.field.choices %}
+                  <div class="form-check">
+                    <input type="radio" class="form-check-input" id="q15_{{ value }}" name="question15" value="{{ value }}" {% if form.question15.value == value %}checked{% endif %}>
+                    <label class="form-check-label" for="q15_{{ value }}">
+                      {{ value }} - {{ label }}
+                    </label>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+            
+            <!-- Ek Notlar -->
+            <h5 class="section-title">📝 Ek Notlar ve Açıklamalar</h5>
+            <p class="section-subtitle">Psikolog ile paylaşmak istediğiniz önemli bilgiler varsa yazabilirsiniz</p>
+            <div class="mb-4">
+              <label class="form-label">{{ form.notes.label }}</label>
+              {{ form.notes }}
+            </div>
+            
+            <div class="mt-5 d-grid">
+              <button type="submit" class="btn btn-primary">✓ Formu Gönder</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.getElementById('id_form_type').addEventListener('change', function() {
+  document.getElementById('therapyForm').submit();
+});
+</script>
+{% endblock %}

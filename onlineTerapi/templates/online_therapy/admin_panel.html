@@ -1,0 +1,22 @@
+{% extends "Base.html" %}
+{% block content %}
+<h3>Başvurular</h3>
+<table class="table table-striped">
+  <thead>
+    <tr><th>Ad</th><th>Tip</th><th>Email</th><th>Durum</th><th>Tarih</th></tr>
+  </thead>
+  <tbody>
+    {% for f in forms %}
+    <tr>
+      <td>{{ f.name }}</td>
+      <td>{{ f.get_form_type_display }}</td>
+      <td>{{ f.email }}</td>
+      <td>{{ f.status }}</td>
+      <td>{{ f.created_at }}</td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="5">Başvuru yok.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
